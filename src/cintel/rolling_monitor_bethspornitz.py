@@ -37,10 +37,6 @@ Terminal command to run this file from the root project folder
 
     uv run python -m cintel.rolling_monitor_bethspornitz
 
-OBS:
-  Don't edit this file - it should remain a working example.
-  Use as much of this code as you can when creating your own pipeline script,
-  and change the monitoring logic as needed for your project.
 """
 
 # === DECLARE IMPORTS ===
@@ -115,7 +111,7 @@ def main() -> None:
     # row 3 → mean of rows [1,2,3]
     # row 4 → mean of rows [2,3,4]
 
-    WINDOW_SIZE: int = 3
+    WINDOW_SIZE: int = 5
 
     # ----------------------------------------------------
     # STEP 3.1: DEFINE ROLLING MEAN FOR # OF REQUESTS
@@ -144,7 +140,15 @@ def main() -> None:
     )
 
     # ----------------------------------------------------
-    # STEP 3.4: APPLY THE ROLLING RECIPES IN A NEW DATAFRAME
+    # STEP 3.4: DEFINE ROLLING MAX FOR LATENCY (NEW)
+    # ----------------------------------------------------
+    # This captures the worst latency observed in the recent window
+    latency_rolling_max_recipe: pl.Expr = (
+        pl.col("total_latency_ms").rolling_max(WINDOW_SIZE).alias("latency_rolling_max")
+    )
+
+    # ----------------------------------------------------
+    # STEP 3.5: APPLY THE ROLLING RECIPES IN A NEW DATAFRAME
     # ----------------------------------------------------
     # with_columns() evaluates the recipes and adds the new columns
     df_with_rolling = df.with_columns(
@@ -152,6 +156,7 @@ def main() -> None:
             requests_rolling_mean_recipe,
             errors_rolling_mean_recipe,
             latency_rolling_mean_recipe,
+            latency_rolling_max_recipe,
         ]
     )
 
