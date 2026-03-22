@@ -114,6 +114,13 @@ def main() -> None:
     WINDOW_SIZE: int = 5
 
     # ----------------------------------------------------
+    # STEP 3.0: DEFINE ERROR RATE (NEW SIGNAL)
+    # ----------------------------------------------------
+    error_rate_recipe: pl.Expr = (pl.col("errors") / pl.col("requests")).alias(
+        "error_rate"
+    )
+
+    # ----------------------------------------------------
     # STEP 3.1: DEFINE ROLLING MEAN FOR # OF REQUESTS
     # ----------------------------------------------------
     # The `requests` column holds the count of requests handled at each timestamp.
@@ -148,15 +155,27 @@ def main() -> None:
     )
 
     # ----------------------------------------------------
-    # STEP 3.5: APPLY THE ROLLING RECIPES IN A NEW DATAFRAME
+    # STEP 3.5: DEFINE ROLLING MEAN FOR ERROR RATE (NEW)
+    # ----------------------------------------------------
+    error_rate_rolling_mean_recipe: pl.Expr = (
+        pl.col("error_rate").rolling_mean(WINDOW_SIZE).alias("error_rate_rolling_mean")
+    )
+
+    # ----------------------------------------------------
+    # STEP 3.6: APPLY THE ROLLING RECIPES IN A NEW DATAFRAME
     # ----------------------------------------------------
     # with_columns() evaluates the recipes and adds the new columns
+    # First: add base error rate
+    df = df.with_columns([error_rate_recipe])
+
+    # Then: apply rolling signals
     df_with_rolling = df.with_columns(
         [
             requests_rolling_mean_recipe,
             errors_rolling_mean_recipe,
             latency_rolling_mean_recipe,
             latency_rolling_max_recipe,
+            error_rate_rolling_mean_recipe,  # NEW
         ]
     )
 
