@@ -90,11 +90,28 @@ def main() -> None:
     df = pl.read_csv(DATA_FILE)
 
     df = df.with_columns(
-        (
-            pl.col("Patient Admission Date") + " " + pl.col("Patient Admission Time")
-        ).alias("timestamp")
+        [
+            (
+                pl.col("Patient Admission Date").cast(pl.Utf8).str.strip_chars()
+                + " "
+                + pl.col("Patient Admission Time").cast(pl.Utf8).str.strip_chars()
+            )
+            .str.strptime(pl.Datetime, format="%m/%d/%Y %I:%M:%S %p", strict=False)
+            .alias("timestamp"),
+            pl.col("Patient Waittime")
+            .cast(pl.Utf8)
+            .str.strip_chars()
+            .cast(pl.Float64, strict=False)
+            .alias("Patient Waittime"),
+            pl.col("Patient Satisfaction Score")
+            .cast(pl.Utf8)
+            .str.strip_chars()
+            .cast(pl.Float64, strict=False)
+            .alias("Patient Satisfaction Score"),
+        ]
     )
-
+    print(df.select(["timestamp", "Patient Waittime"]).head(10))
+    print(df["timestamp"].null_count())
     LOG.info(f"Loaded {df.height} time-series records")
 
     # ----------------------------------------------------
@@ -108,7 +125,7 @@ def main() -> None:
     # ----------------------------------------------------
     # STEP 3: DEFINE ROLLING WINDOW RECIPES
     # ----------------------------------------------------
-    WINDOW_SIZE: int = 5
+    WINDOW_SIZE: int = 50
 
     # ----------------------------------------------------
     # STEP 3.1: DEFINE ROLLING MEAN FOR PATIENT WAIT TIME
@@ -150,6 +167,34 @@ def main() -> None:
     )
 
     LOG.info("Computed rolling healthcare monitoring signals")
+
+    import matplotlib.dates as mdates
+    import matplotlib.pyplot as plt
+
+    # Sort just to be safe
+    df_plot = df_with_rolling.sort("timestamp")
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(
+        df_plot["timestamp"], df_plot["waittime_rolling_mean"], label="Rolling Mean"
+    )
+    plt.plot(df_plot["timestamp"], df_plot["waittime_rolling_max"], label="Rolling Max")
+
+    plt.title("Patient Wait Time Trends")
+    plt.xlabel("Time")
+    plt.ylabel("Wait Time (minutes)")
+    plt.legend()
+
+    ax = plt.gca()
+    ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%m-%d %H:%M"))
+
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    plt.savefig(ARTIFACTS_DIR / "waittime_trends.png")
+    plt.show()
+    plt.close()
 
     # ----------------------------------------------------
     # STEP 4: SAVE RESULTS AS AN ARTIFACT
