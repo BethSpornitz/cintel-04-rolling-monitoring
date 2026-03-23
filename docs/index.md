@@ -73,6 +73,10 @@ In the healthcare dataset, the rolling mean of patient wait time remained relati
 
 The visualization showed that while average performance was steady, variability persisted with consistent spikes in maximum wait time. Patient satisfaction data contained many missing values, limiting its usefulness for rolling analysis.
 
+### Visualization
+
+![Patient Wait Time Trends](../artifacts/waittime_trends.png)
+
 ### Interpretation
 The system metrics analysis demonstrated how rolling signals can effectively track performance trends and detect changes in system behavior over time.
 
