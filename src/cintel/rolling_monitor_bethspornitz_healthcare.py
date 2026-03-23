@@ -1,37 +1,39 @@
 """
-rolling_monitor_bethspornitz.py - Project script.
+rolling_monitor_bethspornitz_healthcare.py - Project script.
 
 Author: Beth Spornitz
 Date: 2026-03
 
-Time-Series System Metrics Data
+Time-Series Healthcare Patient Flow Data
 
-- Data is taken from a system that records operational metrics over time.
-- Each row represents one observation at a specific timestamp.
+- Data is taken from a healthcare system that records patient flow information over time.
+- Each row represents one patient encounter or admission-related observation.
 - The CSV file includes these columns:
-  - timestamp: when the observation occurred
-  - requests: number of requests handled
-  - errors: number of failed requests
-  - total_latency_ms: total response time in milliseconds
+  - Patient Admission Date
+  - Patient Admission Time
+  - Patient Waittime
+  - Patient Satisfaction Score
 
 Purpose
 
-- Read time-series system metrics from a CSV file.
+- Read healthcare patient flow data from a CSV file.
 - Demonstrate rolling monitoring using a moving window.
-- Compute rolling averages to smooth short-term variation.
+- Compute rolling statistics to smooth short-term variation in patient wait times.
 - Save the resulting monitoring signals as a CSV artifact.
 - Log the pipeline process to assist with debugging and transparency.
 
 Questions to Consider
 
-- How does system behavior change over time?
+- How do patient wait times change over time?
 - Why might a rolling average reveal patterns that individual observations hide?
-- How can smoothing short-term variation help us understand longer-term trends?
+- How can smoothing short-term variation help identify recurring delays or bottlenecks?
 
 Paths (relative to repo root)
 
-    INPUT FILE: data/system_metrics_timeseries_bethspornitz.csv
-    OUTPUT FILE: artifacts/rolling_metrics_bethspornitz.csv
+Paths (relative to repo root)
+
+    INPUT FILE: data/healthcare_analytics_patient_flow_data.csv
+    OUTPUT FILE: artifacts/rolling_healthcare_bethspornitz.csv
 
 Terminal command to run this file from the root project folder
 
