@@ -24,12 +24,6 @@ to get these projects running on your machine.
 
 ---
 
-## Additional Resources
-
-- [Suggested Datasets](https://denisecase.github.io/pro-analytics-02/reference/datasets/cintel/)
-
----
-
 ## Custom Project
 
 ### Dataset
