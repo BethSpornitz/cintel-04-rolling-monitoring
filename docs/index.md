@@ -75,7 +75,7 @@ The visualization showed that while average performance was steady, variability 
 
 ### Visualization
 
-![Patient Wait Time Trends](https://raw.githubusercontent.com/YOUR-USERNAME/YOUR-REPO/main/artifacts/waittime_trends.png)
+![Patient Wait Time Trends](images/waittime_trends.png)
 
 ### Interpretation
 The system metrics analysis demonstrated how rolling signals can effectively track performance trends and detect changes in system behavior over time.
@@ -83,3 +83,9 @@ The system metrics analysis demonstrated how rolling signals can effectively tra
 Applying these techniques to healthcare data showed that even when average performance appears stable, peak values can reveal important operational issues. The consistently high maximum wait times suggest bottlenecks or inefficiencies in patient flow, such as staffing constraints.
 
 Additionally, the large number of missing satisfaction scores highlights a data quality limitation, indicating that patient feedback is not consistently captured. Overall, this project demonstrates how rolling monitoring can be applied across different domains to generate meaningful business intelligence.
+
+---
+
+## Additional Resources
+
+- [Suggested Datasets](https://denisecase.github.io/pro-analytics-02/reference/datasets/cintel/)
