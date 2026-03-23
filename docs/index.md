@@ -75,7 +75,7 @@ The visualization showed that while average performance was steady, variability 
 
 ### Visualization
 
-![Patient Wait Time Trends](/artifacts/waittime_trends.png)
+![Patient Wait Time Trends](https://raw.githubusercontent.com/YOUR-USERNAME/YOUR-REPO/main/artifacts/waittime_trends.png)
 
 ### Interpretation
 The system metrics analysis demonstrated how rolling signals can effectively track performance trends and detect changes in system behavior over time.
