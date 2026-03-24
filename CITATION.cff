@@ -22,8 +22,8 @@ authors:
   - family-names: Spornitz
     given-names: Beth
 
-repository-code: https://github.com/denisecase/cintel-04-rolling-monitoring
-url: https://github.com/denisecase/cintel-04-rolling-monitoring
+repository-code: "https://github.com/BethSpornitz/cintel-04-rolling-monitoring"
+url: "https://github.com/BethSpornitz/cintel-04-rolling-monitoring"
 license: MIT
 
 abstract: |
