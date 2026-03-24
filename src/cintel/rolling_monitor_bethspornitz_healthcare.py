@@ -126,6 +126,7 @@ def main() -> None:
 
     # ----------------------------------------------------
     # STEP 3: DEFINE ROLLING WINDOW RECIPES
+    ## A window size of 50 was selected to smooth short-term fluctuations while still capturing meaningful trends in patient wait times. Smaller windows produced noisy signals, while larger windows smoothed out important variations.
     # ----------------------------------------------------
     WINDOW_SIZE: int = 50
 

@@ -35,6 +35,8 @@ The second dataset was a healthcare patient flow dataset containing patient admi
 
 For both datasets, timestamps were used or created to enable time-series analysis. In the healthcare dataset, a timestamp was constructed by combining admission date and time fields.
 
+---
+
 ### Signals
 Rolling signals were created to analyze trends over time in both datasets.
 
@@ -50,6 +52,8 @@ For the healthcare dataset:
 
 These signals helped smooth short term variation and highlight both average behavior and extreme values.
 
+---
+
 ### Experiments
 First, I modified the original system metrics rolling monitor to understand how rolling statistics behave in a controlled dataset. I computed rolling averages and interpreting system performance trends.
 
@@ -58,7 +62,7 @@ The second phase applied these same techniques to a new healthcare dataset. Addi
 - Cleaning and converting numeric data
 - Adjusting rolling window size to improve interpretability of a visual
 
-Experiments with different window sizes showed that smaller windows produced noisy signals, while larger windows produced smoother and more interpretable trends.
+Experiments with different window sizes showed that smaller windows produced noisy signals, while larger windows produced smoother and more interpretable trends.  A window size of 50 was used for the healthcare dataset.
 
 ### Results
 In the system metrics dataset, rolling signals revealed patterns in system performance, including changes in error rate and latency over time.
